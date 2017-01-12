@@ -12,7 +12,7 @@ import pyocr.builders
 
 def trimPics(imagePath,outPath,box): 
     """
-        type: imagePath(str) , box: turple(4)
+        type: imagePath(str) , box: turple(4)(LeftTopx,LeftTopy,RightDownx,RightDowny)
     """
     im = Image.open(imagePath)
     region = im.crop(box)  
@@ -50,14 +50,16 @@ def ocrBike(imagePath):
         type: imagePath(str) 
         rtype: str,str
     """
-    trimPics(imagePath,'bikeNo.jpeg',(460,510,570,545))
+    #box for bikeNo
+    box=(460,0,570,40)
+    trimPics(imagePath,'bikeNo.jpeg',box)
     txt=im2str('bikeNo.jpeg')
     #save digits
     bikeNo = ''.join([s for s in txt if s.isdigit()])
 
-    #print(bikeNo)
-
-    trimPics(imagePath,'bikeCode.jpeg',(130,600,570,730))
+    #box for bikecode
+    box=(130,100,570,230)
+    trimPics(imagePath,'bikeCode.jpeg',box)
     txt=im2str('bikeCode.jpeg')
     #print(bikeCode) 
     #save digits
